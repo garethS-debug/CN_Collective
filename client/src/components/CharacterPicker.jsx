@@ -2,19 +2,21 @@
 
 import { AnimatePresence, motion, usePresenceData, wrap } from "motion/react"
 import { forwardRef, useState } from "react"
+import Characters from "./Characters"
 
 export default function UsePresenceData() {
-    const items = [1, 2, 3, 4, 5, 6]
-    const [selectedItem, setSelectedItem] = useState(items[0])
+    const characters = Characters
+    const [index, setIndex] = useState(0)
     const [direction, setDirection] = useState(1)
 
     function setSlide(newDirection) {
-        const nextItem = wrap(1, items.length, selectedItem + newDirection)
-        setSelectedItem(nextItem)
+        const nextIndex = wrap(0, characters.length, index + newDirection)
+        setIndex(nextIndex)
         setDirection(newDirection)
     }
 
-    const color = `var(--hue-${selectedItem})`
+    const current = characters[index]
+    const color = current?.color || `var(--hue-${index + 1})`
 
     return (
         <div style={container}>
@@ -34,7 +36,7 @@ export default function UsePresenceData() {
                 initial={false}
                 mode="popLayout"
             >
-                <Slide key={selectedItem} color={color} />
+                <Slide key={current?.id ?? index} character={current} />
             </AnimatePresence>
             <motion.button
                 initial={false}
@@ -51,8 +53,9 @@ export default function UsePresenceData() {
     )
 }
 
-const Slide = forwardRef(function Slide({ color }, ref) {
+const Slide = forwardRef(function Slide({ character }, ref) {
     const direction = usePresenceData()
+    const color = character?.color
     return (
         <motion.div
             ref={ref}
@@ -69,7 +72,17 @@ const Slide = forwardRef(function Slide({ color }, ref) {
             }}
             exit={{ opacity: 0, x: direction * -50 }}
             style={{ ...box, backgroundColor: color }}
-        />
+        >
+            {character?.image && (
+                <img
+                    src={character.image}
+                    alt={character.name}
+                    style={{ width: '80%', height: '60%', objectFit: 'cover', borderRadius: 8 }}
+                />
+            )}
+            <div style={{ marginTop: 8, fontWeight: 'bold' }}>{character?.name}</div>
+            <div style={{ fontSize: 12, color: '#333' }}>{character?.description}</div>
+        </motion.div>
     )
 })
 
