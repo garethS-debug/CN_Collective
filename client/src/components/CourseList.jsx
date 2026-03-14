@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../api';
 
 import CourseCard from './CourseCard';
+import CharacterPicker from './CharacterPicker';
 
 const CourseList = () => {
   const [courses, setCourses] = useState([]);
@@ -22,14 +23,19 @@ const CourseList = () => {
     fetchCourses();
   }, []);
 
+  // map courses into the character format CharacterPicker expects
+  const pickerItems = courses.map((character, i) => ({
+    id: character.id,
+    name: character.title,
+    image: `https://via.placeholder.com/150?text=Course+${character.id}`, 
+    description: character.description,
+    color: `hsl(${(i * 55) % 360} 70% 60%)`,
+  }))
+
   return (
     <div>
-      <h2>All Courses</h2>
-      <div className="course-list">
-        {courses.map((course) => (
-          <CourseCard key={course.id} course={course} />
-        ))}
-      </div>
+      <h2>Courses</h2>
+      <CharacterPicker characters={pickerItems} />
     </div>
   );
 };

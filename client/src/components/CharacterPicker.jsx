@@ -2,10 +2,11 @@
 
 import { AnimatePresence, motion, usePresenceData, wrap } from "motion/react"
 import { forwardRef, useState } from "react"
+import { Link } from 'react-router-dom'
 import Characters from "./Characters"
 
-export default function UsePresenceData() {
-    const characters = Characters
+export default function UsePresenceData({ characters: propCharacters }) {
+    const characters = (propCharacters && propCharacters.length) ? propCharacters : Characters
     const [index, setIndex] = useState(0)
     const [direction, setDirection] = useState(1)
 
@@ -77,11 +78,15 @@ const Slide = forwardRef(function Slide({ character }, ref) {
                 <img
                     src={character.image}
                     alt={character.name}
-                    style={{ width: '80%', height: '60%', objectFit: 'cover', borderRadius: 8 }}
+                    style={{ maxWidth: '100%', maxHeight: 160, width: 'auto', objectFit: 'cover', borderRadius: 8 }}
                 />
             )}
             <div style={{ marginTop: 8, fontWeight: 'bold' }}>{character?.name}</div>
             <div style={{ fontSize: 12, color: '#333' }}>{character?.description}</div>
+            <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+                <Link className="button" to={`/course/${character?.id}`}>View Details</Link>
+                <Link className="button" to={`/course/${character?.id}`}>Enroll</Link>
+            </div>
         </motion.div>
     )
 })
@@ -132,10 +137,18 @@ const container = {
 }
 
 const box = {
-    width: 150,
-    height: 150,
+    minWidth: 150,
+    width: 220,
+    minHeight: 120,
+    height: 'auto',
     backgroundColor: "#0cdcf7",
     borderRadius: "10px",
+    padding: 12,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxSizing: 'border-box',
 }
 
 const button = {
