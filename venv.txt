@@ -1,0 +1,4 @@
+lms3\Scripts\activateMY
+
+cd C:\Users\Jasmine\Documents\GitHub\LMS-3000-Jan-26
+.\lms3\Scripts\Activate.ps1
