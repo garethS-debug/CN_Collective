@@ -6,6 +6,15 @@ body {
     background-color: #f5f5f5;
 }
 
+:root {
+    --hue-1: #ff6b6b;
+    --hue-2: #ffb86b;
+    --hue-3: #ffd56b;
+    --hue-4: #8be38b;
+    --hue-5: #6bd3ff;
+    --hue-6: #8c7bff;
+}
+
 header {
     background-color: #333;
     color: white;
