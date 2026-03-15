@@ -5,7 +5,7 @@ import { forwardRef, useState } from "react"
 import { Link } from 'react-router-dom'
 import Characters from "./Characters"
 
-export default function UsePresenceData({ characters: propCharacters }) {
+export default function UsePresenceData({ characters: propCharacters, onEnroll }) {
     const characters = (propCharacters && propCharacters.length) ? propCharacters : Characters
     const [index, setIndex] = useState(0)
     const [direction, setDirection] = useState(1)
@@ -85,7 +85,7 @@ const Slide = forwardRef(function Slide({ character }, ref) {
             <div style={{ fontSize: 12, color: '#333' }}>{character?.description}</div>
             <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
                 <Link className="button" to={`/course/${character?.id}`}>View Details</Link>
-                <Link className="button" to={`/course/${character?.id}`}>Enroll</Link>
+                <button className="button" onClick={() => onEnroll && onEnroll(character?.id)}>Enroll</button>
             </div>
         </motion.div>
     )

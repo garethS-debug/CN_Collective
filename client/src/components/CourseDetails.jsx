@@ -22,6 +22,7 @@ const CourseList = () => {
     };
 
     fetchCourses();
+
   }, []);
 
   const toggleDelegates = () => {
@@ -50,6 +51,32 @@ const handleEnroll = () => {
   enrollCourses();
 };
 
+async function logUserEnrolledCourses(userId) {
+  try {
+
+    const res = await api.get(`/api/users/${userId}`);
+    const userData = res.data;
+    const possibleCourses = userData.courses || userData.enrolledCourses || userData.courses_enrolled || userData.userCourses || null;
+    if (Array.isArray(possibleCourses)) {
+      console.log('Enrolled courses (from user endpoint):', possibleCourses);
+      return possibleCourses;
+    }
+  } catch (error) {
+    console.error(`Failed to fetch enrolled courses for user with id ${userId}`, error);
+    return [];
+  }
+
+}
+
+ function testLogEnrolled() {
+
+  
+    console.log('Current user from session:', user);
+    if (user) {
+      logUserEnrolledCourses(user.id);
+    }
+ }
+
   return (
     <div>
       <h2>Course Details {course.id}ID</h2>
@@ -64,6 +91,7 @@ const handleEnroll = () => {
           <div className="card-options">
             <button className="button" onClick={() => toggleDelegates()}>View Delegates</button>
             <button className="button" onClick={() => handleEnroll()}>Enroll</button>
+            <button className="test" onClick={() => testLogEnrolled()}>Test Log Enrolled Courses</button>
           </div>
         </div>
 
