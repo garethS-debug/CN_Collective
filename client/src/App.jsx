@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GameOneCard from "./components/GameOneCard.jsx";
 import GameTwoCard from "./components/GameTwoCard.jsx";
 import GameThreeCard from "./components/GameThreeCard.jsx";
 import GameFourCard from "./components/GameFourCard.jsx";
 
-const API_BASE_URL = "http://127.0.0.1:5001/api/auth";
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://127.0.0.1:5001/api/auth";
+const TOKEN_STORAGE_KEY = "mini-games-token";
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,6 +20,41 @@ function App() {
   const [statusMessage, setStatusMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem(TOKEN_STORAGE_KEY);
+
+    if (!token) {
+      setIsCheckingAuth(false);
+      return;
+    }
+
+    const restoreSession = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to restore session");
+        }
+
+        setUser(data.user);
+        setStatusMessage(`Welcome back, ${data.user.name}.`);
+      } catch (error) {
+        localStorage.removeItem(TOKEN_STORAGE_KEY);
+      } finally {
+        setIsCheckingAuth(false);
+      }
+    };
+
+    restoreSession();
+  }, []);
 
   const openModal = (nextMode) => {
     setMode(nextMode);
@@ -72,6 +109,7 @@ function App() {
         throw new Error(data.message || "Request failed");
       }
 
+      localStorage.setItem(TOKEN_STORAGE_KEY, data.token);
       setUser(data.user);
       setStatusMessage(
         mode === "login"
@@ -88,6 +126,7 @@ function App() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem(TOKEN_STORAGE_KEY);
     setUser(null);
     setStatusMessage("You have logged out.");
     setErrorMessage("");
@@ -154,6 +193,11 @@ function App() {
               <h2 className="text-4xl font-black leading-tight text-stone-900 sm:text-5xl">
                 Welcome to a website with friendly and easy-to-use games
               </h2>
+              {isCheckingAuth ? (
+                <p className="mt-5 inline-flex rounded-full bg-stone-200 px-4 py-2 text-sm font-semibold text-stone-700">
+                  Checking your session...
+                </p>
+              ) : null}
               {statusMessage ? (
                 <p className="mt-5 inline-flex rounded-full bg-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-800">
                   {statusMessage}

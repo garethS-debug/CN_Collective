@@ -1,14 +1,18 @@
 require("dotenv").config();
 
 const app = require("./app");
-const { initDb } = require("./db");
+const { connectDatabase } = require("./models");
 
 const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST || "127.0.0.1";
 
 async function startServer() {
   try {
-    await initDb();
+    if (!process.env.JWT_SECRET) {
+      throw new Error("JWT_SECRET is not set");
+    }
+
+    await connectDatabase();
 
     const server = app.listen(PORT, HOST, () => {
       console.log(`Server started on http://${HOST}:${PORT}`);
