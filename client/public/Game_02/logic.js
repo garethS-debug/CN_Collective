@@ -5,6 +5,7 @@ const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
 let startTime = null;
+let hasStarted = false;
 
 // keep logical canvas size the same as the game design
 canvas.width = DESIGN_WIDTH;
@@ -186,7 +187,7 @@ function drawLevel() {
 function postResult(scoreToSend, durationSec) {
   const payload = {
     type: "GAME_RESULT",
-    gameKey: "breakout", 
+    gameKey: "find_the_number",
     score: scoreToSend,
     duration: durationSec,
   };
@@ -242,15 +243,21 @@ function draw() {
 
 const runButton = document.getElementById("runButton");
 runButton.addEventListener("click", () => {
+  if (hasStarted) {
+    return;
+  }
+
+  hasStarted = true;
   startTime = Date.now();
   draw();
   runButton.disabled = true;
 });
 
-
 const testScoreButton = document.getElementById("testScore");
 testScoreButton.addEventListener("click", () => {
-  const duration = Math.max(1, Math.round((Date.now() - startTime) / 1000));
+  const duration = startTime
+    ? Math.max(1, Math.round((Date.now() - startTime) / 1000))
+    : 1;
   postResult(score, duration);
 });
 
@@ -260,3 +267,5 @@ fetch('http://127.0.0.1:5001/api/results/me', {
   headers: { Authorization: `Bearer ${localStorage.getItem('mini-games-token')}` }
 }).then(r => r.json()).then(data => console.log(data));
 });
+
+runButton.click();

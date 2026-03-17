@@ -36,11 +36,11 @@ export default function PaddleGame({ onResultSaved }) {
   }, [saveGameResult, onResultSaved]);
 
   return (
-    <div style={{ width: "100%" }}>
+    <div className="h-full w-full overflow-hidden rounded-[1.5rem] bg-stone-100">
       <iframe
         src="/Game_02/index.html"
         title="Game 02"
-        style={{ width: "100%", height: 520, border: "none" }}
+        className="h-[560px] w-full rounded-[1.5rem] border-0 bg-white lg:h-full lg:min-h-[560px]"
       />
     </div>
   );

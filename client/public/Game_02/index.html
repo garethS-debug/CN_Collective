@@ -2,29 +2,22 @@
 <html lang="en-US">
   <head>
     <meta charset="utf-8" />
-    <title>Gamedev Canvas Workshop</title>
-    <!-- //importing style.ss -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Breakout</title>
     <link rel="stylesheet" href="./style.css" />
-    <!-- importing javascript -->
     <script src="./logic.js" defer></script>
-    <style>
-      * {
-        padding: 0;
-        margin: 0;
-      }
-      canvas {
-        background: #eeeeee;
-        display: block;
-        margin: 0 auto;
-      }
-    </style>
   </head>
   <body>
-    <canvas id="myCanvas" width="480" height="320"></canvas>
+    <main class="game-shell">
+      <div class="game-frame">
+        <canvas id="myCanvas" width="480" height="320"></canvas>
+      </div>
 
-
-<button id="runButton">Start game</button>
-<button id="testScore">Test Score</button>
-<button id="GetResults">Get Results</button>
+      <div class="game-actions">
+        <button id="runButton" class="game-button">Start game</button>
+        <button id="testScore" class="game-button game-button-secondary">Send test score</button>
+        <button id="GetResults" class="game-button game-button-secondary">Load my results</button>
+      </div>
+    </main>
   </body>
 </html>

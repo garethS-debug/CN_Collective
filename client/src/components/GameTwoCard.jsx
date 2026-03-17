@@ -1,13 +1,8 @@
 import PaddleGame from './paddleGame/PaddleGame'
 
 
-export default function Game02Frame() {
+export default function Game02Frame({ onResultSaved }) {
   return (
-    // <iframe
-    //   src="/Game_02/index.html"
-    //   title="Game 02"
-    //   style={{ width: "100%", height: 520, border: "none" }}
-    // />
-    <PaddleGame />
+    <PaddleGame onResultSaved={onResultSaved} />
   );
 }
