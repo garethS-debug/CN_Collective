@@ -1,34 +1,41 @@
-import { useEffect, useRef } from "react";
-import useSaveGameResult from "../hooks/useSaveGameResult";
+import React, { useRef, useEffect, useCallback } from "react";
 
-function GameTwoCard() {
+const GAME_WIDTH = 480;
+const GAME_HEIGHT = 320;
+
+export default function Game02Frame() {
+  const containerRef = useRef(null);
   const iframeRef = useRef(null);
-  const { saveGameResult } = useSaveGameResult();
+
+  const resize = useCallback(() => {
+    const container = containerRef.current;
+    const iframe = iframeRef.current;
+    if (!container || !iframe) return;
+    const containerWidth = container.clientWidth;
+    const scale = containerWidth / GAME_WIDTH;
+    iframe.style.width = `${GAME_WIDTH}px`;
+    iframe.style.height = `${GAME_HEIGHT}px`;
+    iframe.style.transform = `scale(${scale})`;
+    iframe.style.transformOrigin = "0 0";
+    container.style.height = `${GAME_HEIGHT * scale}px`;
+    container.style.overflow = "hidden";
+  }, []);
 
   useEffect(() => {
-    function onMessage(e) {
-      if (!e.data) return;
-      if (e.data.type === "gameOver") {
-        // e.data.score or duration etc.
-        saveGameResult({ gameKey: "breakout", score: e.data.score });
-      }
-    }
-    window.addEventListener("message", onMessage);
-    return () => window.removeEventListener("message", onMessage);
-  }, [saveGameResult]);
+    resize();
+    window.addEventListener("resize", resize);
+    return () => window.removeEventListener("resize", resize);
+  }, [resize]);
 
   return (
-    <article className="...">
-      <h3>Breakout (iframe)</h3>
+    <div ref={containerRef} style={{ width: "100%" }}>
       <iframe
         ref={iframeRef}
         src="/Game_02/index.html"
-        title="Breakout"
-        style={{ width: "100%", height: 360, border: "none" }}
-        sandbox="allow-scripts allow-same-origin"
+        title="Game 02"
+        style={{ border: "none", display: "block" }}
+        onLoad={resize}
       />
-    </article>
+    </div>
   );
 }
-
-export default GameTwoCard;

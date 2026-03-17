@@ -1,7 +1,32 @@
+const DESIGN_WIDTH = 480;
+const DESIGN_HEIGHT = 320;
+
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
-const ballRadius = 10;
 
+// keep logical canvas size the same as the game design
+canvas.width = DESIGN_WIDTH;
+canvas.height = DESIGN_HEIGHT;
+
+// scale the canvas display to fit its container while preserving aspect
+function resizeCanvasToContainer() {
+  const parent = canvas.parentElement || document.body;
+  const containerWidth = parent.clientWidth;
+  const scale = containerWidth / DESIGN_WIDTH;
+  const displayWidth = Math.floor(DESIGN_WIDTH * scale);
+  const displayHeight = Math.floor(DESIGN_HEIGHT * scale);
+
+  canvas.style.width = displayWidth + "px";
+  canvas.style.height = displayHeight + "px";
+  // prevent layout overflow if parent is too small
+  parent.style.overflow = "hidden";
+  parent.style.height = displayHeight + "px";
+}
+
+window.addEventListener("resize", resizeCanvasToContainer);
+resizeCanvasToContainer();
+
+const ballRadius = 10;
 let x = canvas.width / 2;
 let y = canvas.height - 30;
 let dx = 2;
@@ -56,11 +81,15 @@ function keyUpHandler(e) {
 }
 
 function mouseMoveHandler(e) {
-  let relativeX = e.clientX - canvas.offsetLeft;
+  // map client coordinates to canvas logical coordinates taking CSS scaling into account
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const relativeX = (e.clientX - rect.left) * scaleX;
   if (relativeX > 0 && relativeX < canvas.width) {
     paddleX = relativeX - paddleWidth / 2;
   }
 }
+
 function collisionDetection() {
   for (let c = 0; c < brickColumnCount; c++) {
     for (let r = 0; r < brickRowCount; r++) {
@@ -78,7 +107,6 @@ function collisionDetection() {
           if (score === brickRowCount * brickColumnCount) {
             level++;
             alert(`LEVEL ${level}`);
-            // Reset bricks
             score = 0;
             for (let c = 0; c < brickColumnCount; c++) {
               for (let r = 0; r < brickRowCount; r++) {
@@ -93,8 +121,6 @@ function collisionDetection() {
             const speedIncrease = 0.5 * (level - 1);
             dx = 2 + speedIncrease;
             dy = -2 - speedIncrease;
-
-           // document.location.reload();
           }
         }
       }
