@@ -16,7 +16,6 @@ function GameOneCard({ onResultSaved }) {
     setStatusMessage,
     startTime,
     handleCardClick,
-    restartGame,
     totalPairs,
   } = useMemoryGame();
 
@@ -64,40 +63,20 @@ function GameOneCard({ onResultSaved }) {
     saveResult();
   }, [allMatched, moves, startTime, hasSavedResult, saveGameResult, onResultSaved, setStatusMessage]);
 
-  const handleRestart = () => {
-    restartGame();
-    setHasSavedResult(false);
-  };
-
   return (
-    <article className="rounded-[2rem] border border-white/70 bg-white/85 p-6 shadow-[0_16px_40px_rgba(93,64,55,0.12)]">
-      <div className="mb-5 flex items-center justify-between gap-3">
-        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-300 to-orange-200 text-xl font-black text-stone-900">
-          01
-        </div>
-        <button
-          type="button"
-          onClick={handleRestart}
-          className="rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 transition hover:border-amber-600 hover:text-amber-700"
-        >
-          Restart
-        </button>
-      </div>
-
-      <h3 className="text-2xl font-black text-stone-900">Memory Cards</h3>
-      <p className="mt-3 text-base leading-7 text-stone-700">
-        Match the fruit pairs by flipping two cards at a time.
-      </p>
-
-      <div className="mt-5 flex items-center justify-between rounded-2xl bg-amber-50 px-4 py-3 text-sm font-semibold text-stone-700">
+    <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(93,64,55,0.12)] sm:p-4">
+      <div className="flex items-center justify-between rounded-2xl bg-amber-50 px-3 py-2 text-xs font-semibold text-stone-700 sm:px-4 sm:py-3 sm:text-sm">
         <span>Moves: {moves}</span>
         <span>Pairs: {matchedPairs}/{totalPairs}</span>
       </div>
 
-      <p className="mt-4 min-h-12 rounded-2xl bg-stone-100 px-4 py-3 text-sm font-semibold text-stone-700">
+      <p className="mt-2 rounded-2xl bg-stone-100 px-3 py-2 text-xs font-semibold text-stone-700 sm:px-4 sm:py-3 sm:text-sm">
         {statusMessage}
       </p>
-      <MemoryBoard cards={cards} onCardClick={handleCardClick} />
+
+      <div className="mt-2 flex-1 overflow-hidden">
+        <MemoryBoard cards={cards} onCardClick={handleCardClick} />
+      </div>
     </article>
   );
 }
