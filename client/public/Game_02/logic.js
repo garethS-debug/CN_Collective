@@ -4,6 +4,8 @@ const DESIGN_HEIGHT = 320;
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
+let startTime = null;
+
 // keep logical canvas size the same as the game design
 canvas.width = DESIGN_WIDTH;
 canvas.height = DESIGN_HEIGHT;
@@ -176,6 +178,17 @@ function drawLevel() {
   ctx.fillText(`Level: ${level}`, canvas.width / 2 - 30, 20);
 }
 
+function postResult(scoreToSend, durationSec) {
+  const payload = {
+    type: "breakout_result",
+    gameKey: "breakout", 
+    score: scoreToSend,
+    duration: durationSec,
+  };
+  window.parent.postMessage(payload, "*");
+}
+
+
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawBricks();
@@ -197,8 +210,10 @@ function draw() {
     } else {
       lives--;
       if (!lives) {
-        alert("GAME OVER");
-        document.location.reload();
+       const duration = Math.max(1, Math.round((Date.now() - startTime) / 1000));
+      postResult(score, duration);
+      alert("GAME OVER");
+      document.location.reload();
       } else {
         x = canvas.width / 2;
         y = canvas.height - 30;
@@ -222,6 +237,14 @@ function draw() {
 
 const runButton = document.getElementById("runButton");
 runButton.addEventListener("click", () => {
+  startTime = Date.now();
   draw();
   runButton.disabled = true;
+});
+
+
+const testScoreButton = document.getElementById("testScore");
+testScoreButton.addEventListener("click", () => {
+  const duration = Math.max(1, Math.round((Date.now() - startTime) / 1000));
+  postResult(score, duration);
 });
