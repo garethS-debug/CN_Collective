@@ -248,3 +248,10 @@ testScoreButton.addEventListener("click", () => {
   const duration = Math.max(1, Math.round((Date.now() - startTime) / 1000));
   postResult(score, duration);
 });
+
+const getResultsButton = document.getElementById("GetResults");
+getResultsButton.addEventListener("click", () => {
+fetch('http://127.0.0.1:5001/api/results/me', {
+  headers: { Authorization: `Bearer ${localStorage.getItem('mini-games-token')}` }
+}).then(r => r.json()).then(data => console.log(data));
+});
