@@ -82,6 +82,11 @@ function keyUpHandler(e) {
   }
 }
 
+function getDurationSeconds() {
+  if (!startTime) return 1;
+  return Math.max(1, Math.round((Date.now() - startTime) / 1000));
+}
+
 function mouseMoveHandler(e) {
   // map client coordinates to canvas logical coordinates taking CSS scaling into account
   const rect = canvas.getBoundingClientRect();
@@ -109,7 +114,7 @@ function collisionDetection() {
           if (score === brickRowCount * brickColumnCount) {
             level++;
             alert(`LEVEL ${level}`);
-            score = 0;
+            // score = 0;
             for (let c = 0; c < brickColumnCount; c++) {
               for (let r = 0; r < brickRowCount; r++) {
                 bricks[c][r].status = 1;
@@ -211,8 +216,7 @@ function draw() {
     } else {
       lives--;
       if (!lives) {
-       const duration = Math.max(1, Math.round((Date.now() - startTime) / 1000));
-      postResult(score, duration);
+        postResult(score, getDurationSeconds());
       alert("GAME OVER");
       document.location.reload();
       } else {

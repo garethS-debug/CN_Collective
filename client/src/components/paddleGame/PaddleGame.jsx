@@ -7,18 +7,27 @@ export default function PaddleGame({ onResultSaved }) {
   useEffect(() => {
     async function handleMessage(e) {
       const msg = e.data;
-      if (!msg || msg.type !== "GAME_RESULT") return;
+      if (!msg) return;
+      console.log("Parent received message:", msg);
+
+      if (msg.type !== "GAME_RESULT") return;
+
       const { gameKey, score, duration } = msg;
+      if (gameKey == null || score == null || duration == null) {
+        console.warn("Incomplete game result payload", msg);
+        return;
+      }
 
       try {
         const result = await saveGameResult({ gameKey, score, duration });
+        console.log("Save result response:", result);
         if (result.requiresAuth) {
-          // optionally open login UI or notify user
+          console.warn("Save requires auth");
           return;
         }
         onResultSaved?.();
       } catch (err) {
-        // handle/save error if wanted
+        console.error("Failed to save game result:", err);
       }
     }
 
