@@ -44,6 +44,11 @@ const defaultGames = [
     title: "Reaction Tap",
     description: "Tap as quickly as you can when the signal appears.",
   },
+    {
+    key: "breakout",
+    title: "Breakout",
+    description: "Break bricks and score points.",
+  },
 ];
 
 async function connectDatabase() {

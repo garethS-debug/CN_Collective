@@ -180,11 +180,12 @@ function drawLevel() {
 
 function postResult(scoreToSend, durationSec) {
   const payload = {
-    type: "breakout_result",
+    type: "GAME_RESULT",
     gameKey: "breakout", 
     score: scoreToSend,
     duration: durationSec,
   };
+  console.log("posting result to parent:", payload);
   window.parent.postMessage(payload, "*");
 }
 
