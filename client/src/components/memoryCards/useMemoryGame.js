@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { createShuffledCards, fruitEmojis } from "./memoryUtils.js";
+import { createShuffledCards, fruitCards } from "./memoryUtils.js";
 
 function useMemoryGame() {
   const [cards, setCards] = useState(() => createShuffledCards());
@@ -16,7 +16,7 @@ function useMemoryGame() {
     [cards]
   );
 
-  const allMatched = matchedPairs === fruitEmojis.length;
+  const allMatched = matchedPairs === fruitCards.length;
 
   useEffect(() => {
     if (selectedCards.length !== 2) {
@@ -35,7 +35,7 @@ function useMemoryGame() {
       return undefined;
     }
 
-    if (firstCard.emoji === secondCard.emoji) {
+    if (firstCard.key === secondCard.key) {
       setCards((currentCards) =>
         currentCards.map((card) =>
           card.id === firstId || card.id === secondId
@@ -109,7 +109,7 @@ function useMemoryGame() {
     startTime,
     handleCardClick,
     restartGame,
-    totalPairs: fruitEmojis.length,
+    totalPairs: fruitCards.length,
   };
 }
 

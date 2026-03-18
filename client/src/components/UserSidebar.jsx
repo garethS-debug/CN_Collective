@@ -1,14 +1,31 @@
-function UserSidebar({ user, myResults, leaderboard, isLoadingSidebar }) {
+function UserSidebar({
+  user,
+  avatar,
+  myResults,
+  leaderboard,
+  isLoadingSidebar,
+}) {
   return (
-    <aside className="h-fit rounded-[2rem] border border-white/70 bg-white/80 p-5 shadow-[0_16px_40px_rgba(93,64,55,0.12)]">
-      <div className="mb-6 rounded-[1.5rem] bg-amber-50 px-4 py-4">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-700">
-          Player
-        </p>
-        <h3 className="mt-2 text-2xl font-black text-stone-900">
-          {user.name}
-        </h3>
-        <p className="mt-1 text-sm text-stone-600">{user.email}</p>
+    <aside className="page-shell h-fit rounded-[2.25rem] border border-white/70 bg-white/80 p-5 shadow-[0_16px_40px_rgba(93,64,55,0.12)]">
+      <div className="mb-6 flex items-center justify-between rounded-[1.75rem] bg-stone-50 px-4 py-4">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-700">
+            Player
+          </p>
+          <h3 className="mt-2 text-2xl font-black text-stone-900">
+            {user.name}
+          </h3>
+          <p className="mt-1 text-sm text-stone-600">{user.email}</p>
+        </div>
+        {avatar ? (
+          <img
+            src={avatar.src}
+            alt="Selected avatar"
+            className="h-24 w-24 object-contain"
+          />
+        ) : (
+          <div className="text-6xl">🧑</div>
+        )}
       </div>
 
       <section>
@@ -24,7 +41,10 @@ function UserSidebar({ user, myResults, leaderboard, isLoadingSidebar }) {
         <div className="space-y-3">
           {myResults.length > 0 ? (
             myResults.slice(0, 5).map((result) => (
-              <div key={result.id} className="rounded-2xl bg-stone-100 px-4 py-3">
+              <div
+                key={result.id}
+                className="rounded-[1.5rem] bg-stone-100 px-4 py-3"
+              >
                 <p className="text-sm font-black text-stone-900">
                   {result.game?.title || "Game"}
                 </p>
@@ -51,7 +71,7 @@ function UserSidebar({ user, myResults, leaderboard, isLoadingSidebar }) {
             leaderboard.slice(0, 5).map((result, index) => (
               <div
                 key={result.id}
-                className="flex items-center justify-between rounded-2xl bg-stone-100 px-4 py-3"
+                className="flex items-center justify-between rounded-[1.5rem] bg-stone-100 px-4 py-3"
               >
                 <div>
                   <p className="text-sm font-black text-stone-900">

@@ -2,7 +2,7 @@ import MemoryCard from "./MemoryCard.jsx";
 
 function MemoryBoard({ cards, onCardClick }) {
   return (
-    <div className="mt-5 grid grid-cols-3 gap-3">
+    <div className="grid h-full grid-cols-3 grid-rows-4 gap-2 md:grid-cols-4 md:grid-rows-3">
       {cards.map((card) => (
         <MemoryCard
           key={card.id}
