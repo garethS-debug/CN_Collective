@@ -44,14 +44,15 @@ const getRandomWord = () => {
     resetGame();
 }
 const gameOver = (isVictory) => {
-      score = Math.max(0, maxGuesses - wrongGuessCount);
+      // Score should reflect the round achieved (current round)
+      score = round;
      postResult(score, getDurationSeconds());
 
 
     if (isVictory) {
-    round++;
-    if (roundDisplay) roundDisplay.innerText = round;
-        }
+        round++;
+        if (roundDisplay) roundDisplay.innerText = round;
+    }
 
 
     // After game complete.. showing modal with relevant details
@@ -116,11 +117,11 @@ for (let i = 97; i <= 122; i++) {
 getRandomWord();
 
 const testScoreButton = document.getElementById("testScore");
+
 testScoreButton.addEventListener("click", () => {
-  const duration = startTime
-    ? Math.max(1, Math.round((Date.now() - startTime) / 1000))
-    : 1;
-  postResult(score, duration);
+    const duration = getDurationSeconds();
+    // Send current round as score so progress is reflected immediately
+    postResult(round, duration);
 });
 
 const getResultsButton = document.getElementById("GetResults");
