@@ -62,9 +62,7 @@ function UserSidebar({
       </section>
 
       <section className="mt-6">
-        <h4 className="mb-3 text-lg font-black text-stone-900">
-          Memory Cards Ranking
-        </h4>
+        <h4 className="mb-3 text-lg font-black text-stone-900">Top Ranking</h4>
 
         <div className="space-y-3">
           {leaderboard.length > 0 ? (
@@ -78,7 +76,7 @@ function UserSidebar({
                     #{index + 1} {result.user?.name || "Player"}
                   </p>
                   <p className="mt-1 text-sm text-stone-600">
-                    Score: {result.score}
+                    {result.game?.title || "Game"} | Score: {result.score}
                   </p>
                 </div>
                 <span className="text-sm font-semibold text-stone-600">

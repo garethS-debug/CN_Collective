@@ -123,7 +123,9 @@ function ProfilePage({
                     <p className="text-sm font-black text-stone-900">
                       #{index + 1} {result.user?.name || "Player"}
                     </p>
-                    <p className="text-xs text-stone-500">Score {result.score}</p>
+                    <p className="text-xs text-stone-500">
+                      {result.game?.title || "Game"} | Score {result.score}
+                    </p>
                   </div>
                   <span className="text-sm font-semibold text-stone-600">
                     {result.duration}s

@@ -23,11 +23,11 @@ const games = [
   },
   {
     key: "find_the_number",
-    title: "Find The Number",
-    subtitle: "Focus game",
+    title: "Breakout",
+    subtitle: "Arcade game",
     description:
-      "A focus exercise with large controls and gentle pacing for easy play.",
-    icon: "🔢",
+      "Break the bricks, keep the ball in play and build your score.",
+    icon: "🏓",
     accent: "bg-gradient-to-r from-sky-300 to-cyan-300",
   },
   {
@@ -40,13 +40,13 @@ const games = [
     accent: "bg-gradient-to-r from-emerald-300 to-lime-300",
   },
   {
-    key: "reaction_tap",
-    title: "Reaction Tap",
-    subtitle: "Quick response",
+    key: "number_hunt",
+    title: "Number Hunt",
+    subtitle: "Find 1 to 30",
     description:
-      "Watch for the signal and tap at the right moment to improve reaction.",
-    icon: "⚡",
-    accent: "bg-gradient-to-r from-rose-300 to-pink-300",
+      "Find the scattered numbers in the correct order from 1 to 30.",
+    icon: "🔎",
+    accent: "bg-gradient-to-r from-cyan-300 to-blue-300",
   },
 ];
 
@@ -73,27 +73,49 @@ function App() {
     setIsLoadingSidebar(true);
 
     try {
-      const [resultsResponse, leaderboardResponse] = await Promise.all([
+      const [resultsResponse, ...leaderboardResponses] = await Promise.all([
         fetch(`${RESULTS_API_URL}/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }),
-        fetch(`${RESULTS_API_URL}/leaderboard/memory_cards`),
+        ...games.map((game) =>
+          fetch(`${RESULTS_API_URL}/leaderboard/${game.key}`).then(
+            async (response) => ({
+              ok: response.ok,
+              game,
+              data: await response.json(),
+            }),
+          ),
+        ),
       ]);
 
-      const [resultsData, leaderboardData] = await Promise.all([
-        resultsResponse.json(),
-        leaderboardResponse.json(),
-      ]);
+      const resultsData = await resultsResponse.json();
 
       if (resultsResponse.ok) {
         setMyResults(resultsData.results || []);
       }
 
-      if (leaderboardResponse.ok) {
-        setLeaderboard(leaderboardData.results || []);
-      }
+      const combinedLeaderboard = leaderboardResponses
+        .filter((entry) => entry.ok)
+        .flatMap((entry) =>
+          (entry.data.results || []).map((result) => ({
+            ...result,
+            game: result.game || {
+              key: entry.game.key,
+              title: entry.game.title,
+            },
+          })),
+        )
+        .sort((left, right) => {
+          if (right.score !== left.score) {
+            return right.score - left.score;
+          }
+
+          return left.duration - right.duration;
+        });
+
+      setLeaderboard(combinedLeaderboard);
     } catch (error) {
       setMyResults([]);
       setLeaderboard([]);
