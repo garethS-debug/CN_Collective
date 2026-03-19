@@ -19,11 +19,10 @@
 // }
 
 // export default GameThreeCard;
-import useSaveGameResult from "../hooks/useSaveGameResult.js";
 import { useEffect } from "react";
+import useSaveGameResult from "../hooks/useSaveGameResult.js";
 
-
-export default function SequenceRepeatFrame({ onResultSaved }) {
+export default function GameThreeCard({ onResultSaved }) {
   const { saveGameResult } = useSaveGameResult();
 
   useEffect(() => {
@@ -44,11 +43,12 @@ export default function SequenceRepeatFrame({ onResultSaved }) {
   }, [saveGameResult, onResultSaved]);
 
   return (
-    <div className="h-full w-full overflow-hidden rounded-[1.5rem] bg-stone-100">
+    <div className="h-full w-full flex items-start justify-center pt-36 pb-8">
       <iframe
         src="/Hangman/index.html"
         title="Hangman"
-        className="h-[560px] w-full rounded-[1.5rem] border-0 bg-white lg:h-full lg:min-h-[560px]"
+        className="w-full max-w-3xl h-[640px] rounded-[1.5rem] border-0 bg-white"
+        style={{ display: "block", margin: "0 auto" }}
       />
     </div>
   );

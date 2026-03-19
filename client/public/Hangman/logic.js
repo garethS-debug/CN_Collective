@@ -114,4 +114,20 @@ for (let i = 97; i <= 122; i++) {
     button.addEventListener("click", (e) => initGame(e.target, String.fromCharCode(i)));
 }
 getRandomWord();
+
+const testScoreButton = document.getElementById("testScore");
+testScoreButton.addEventListener("click", () => {
+  const duration = startTime
+    ? Math.max(1, Math.round((Date.now() - startTime) / 1000))
+    : 1;
+  postResult(score, duration);
+});
+
+const getResultsButton = document.getElementById("GetResults");
+getResultsButton.addEventListener("click", () => {
+fetch('http://127.0.0.1:5001/api/results/me', {
+  headers: { Authorization: `Bearer ${localStorage.getItem('mini-games-token')}` }
+}).then(r => r.json()).then(data => console.log(data));
+});
+
 playAgainBtn.addEventListener("click", getRandomWord);
