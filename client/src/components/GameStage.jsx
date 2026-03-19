@@ -3,11 +3,13 @@ import GameOneCard from "./GameOneCard.jsx";
 import GameTwoCard from "./GameTwoCard.jsx";
 import GameThreeCard from "./GameThreeCard.jsx";
 import GameFourCard from "./GameFourCard.jsx";
+import GameFiveCard from "./GameFiveCard.jsx";
 
 const RESTARTABLE_GAMES = new Set([
   "memory_cards",
   "sequence_repeat",
   "number_hunt",
+  "fifteen_puzzle",
 ]);
 
 function GameStage({ game, onBack, onResultSaved }) {
@@ -69,6 +71,12 @@ function GameStage({ game, onBack, onResultSaved }) {
       {game.key === "number_hunt" ? (
         <div className="flex-1 overflow-hidden">
           <GameFourCard key={restartSeed} onResultSaved={onResultSaved} />
+        </div>
+      ) : null}
+
+      {game.key === "fifteen_puzzle" ? (
+        <div className="flex-1 overflow-hidden">
+          <GameFiveCard key={restartSeed} onResultSaved={onResultSaved} />
         </div>
       ) : null}
 

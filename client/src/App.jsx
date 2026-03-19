@@ -48,6 +48,15 @@ const games = [
     icon: "🔎",
     accent: "bg-gradient-to-r from-cyan-300 to-blue-300",
   },
+  {
+    key: "fifteen_puzzle",
+    title: "Fifteen Puzzle",
+    subtitle: "Slide the tiles",
+    description:
+      "Move the tiles into the empty space and arrange the numbers from 1 to 15.",
+    icon: "🔲",
+    accent: "bg-gradient-to-r from-rose-300 to-pink-300",
+  },
 ];
 
 function App() {
