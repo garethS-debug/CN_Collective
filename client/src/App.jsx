@@ -32,10 +32,10 @@ const games = [
   },
   {
     key: "sequence_repeat",
-    title: "Sequence Repeat",
-    subtitle: "Memory pattern",
+    title: "Hangman",
+    subtitle: "Word guessing",
     description:
-      "Repeat a short sequence and train short-term memory in calm rounds.",
+      "Guess the hidden word by suggesting letters within a limited number of attempts.",
     icon: "🧠",
     accent: "bg-gradient-to-r from-emerald-300 to-lime-300",
   },
