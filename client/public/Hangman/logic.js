@@ -5,19 +5,38 @@ const hangmanImage = document.querySelector(".hangman-box img");
 const gameModal = document.querySelector(".game-modal");
 const playAgainBtn = gameModal.querySelector("button");
 // Initializing game variables
+
+let startTime = null;
+let hasStarted = false;
+const roundDisplay = document.querySelector(".round b");
+let round = Number(roundDisplay?.innerText) || 1;
+// let isVictory = false;
+let score = 0;
+
 let currentWord, correctLetters, wrongGuessCount;
 const maxGuesses = 6;
 const resetGame = () => {
     // Ressetting game variables and UI elements
     correctLetters = [];
     wrongGuessCount = 0;
+
+
+
     hangmanImage.src = "./images/hangman-0.svg";
     guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
     wordDisplay.innerHTML = currentWord.split("").map(() => `<li class="letter"></li>`).join("");
     keyboardDiv.querySelectorAll("button").forEach(btn => btn.disabled = false);
     gameModal.classList.remove("show");
+
 }
+
+
+
+
+
 const getRandomWord = () => {
+    startTime = Date.now();
+    hasStarted = true;
     // Selecting a random word and hint from the wordList
     const { word, hint } = wordList[Math.floor(Math.random() * wordList.length)];
     currentWord = word; // Making currentWord as random word
@@ -25,6 +44,16 @@ const getRandomWord = () => {
     resetGame();
 }
 const gameOver = (isVictory) => {
+      score = Math.max(0, maxGuesses - wrongGuessCount);
+     postResult(score, getDurationSeconds());
+
+
+    if (isVictory) {
+    round++;
+    if (roundDisplay) roundDisplay.innerText = round;
+        }
+
+
     // After game complete.. showing modal with relevant details
     const modalText = isVictory ? `You found the word:` : 'The correct word was:';
     gameModal.querySelector("img").src = `images/${isVictory ? 'victory' : 'lost'}.gif`;
@@ -32,6 +61,24 @@ const gameOver = (isVictory) => {
     gameModal.querySelector("p").innerHTML = `${modalText} <b>${currentWord}</b>`;
     gameModal.classList.add("show");
 }
+
+
+function getDurationSeconds() {
+  if (!startTime) return 1;
+  return Math.max(1, Math.round((Date.now() - startTime) / 1000));
+}
+
+function postResult(scoreToSend, durationSec) {
+  const payload = {
+    type: "GAME_RESULT",
+    gameKey: "sequence_repeat",
+    score: scoreToSend,
+    duration: durationSec,
+  };
+  console.log("posting result to parent:", payload);
+  window.parent.postMessage(payload, "*");
+}
+
 const initGame = (button, clickedLetter) => {
     // Checking if clickedLetter is exist on the currentWord
     if(currentWord.includes(clickedLetter)) {
@@ -51,8 +98,13 @@ const initGame = (button, clickedLetter) => {
     button.disabled = true; // Disabling the clicked button so user can't click again
     guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
     // Calling gameOver function if any of these condition meets
-    if(wrongGuessCount === maxGuesses) return gameOver(false);
-    if(correctLetters.length === currentWord.length) return gameOver(true);
+    if(wrongGuessCount === maxGuesses) {
+        
+        return gameOver(false);
+    } 
+    if(correctLetters.length === currentWord.length) {
+ return gameOver(true);
+    }
 }
 // Creating keyboard buttons and adding event listeners
 for (let i = 97; i <= 122; i++) {
