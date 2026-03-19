@@ -1,5 +1,6 @@
 import GameOneCard from "./GameOneCard.jsx";
 import GameTwoCard from "./GameTwoCard.jsx";
+import GameThreeCard from "./GameThreeCard.jsx";
 import { useState } from "react";
 
 function GameStage({ game, onBack, onResultSaved }) {
@@ -52,7 +53,7 @@ function GameStage({ game, onBack, onResultSaved }) {
         </div>
       ) : null}
 
-      {game.key !== "memory_cards" && game.key !== "find_the_number" ? (
+      {/* {game.key !== "memory_cards" && game.key !== "find_the_number" ? (
         <div className="flex flex-1 flex-col items-center justify-center rounded-[2rem] border border-dashed border-stone-300 bg-stone-100 text-center">
           <div className="text-7xl">{game.icon}</div>
           <h3 className="mt-5 text-3xl font-black text-stone-900">
@@ -63,7 +64,12 @@ function GameStage({ game, onBack, onResultSaved }) {
             the game directly inside this full-screen layout.
           </p>
         </div>
-      ) : null}
+      ) : null} */}
+      {game.key === "sequence_repeat" ? (
+  <div className="flex-1 overflow-hidden rounded-[2rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(93,64,55,0.12)] sm:p-4">
+    <GameThreeCard onResultSaved={onResultSaved} />
+  </div>
+) : null}
     </section>
   );
 }
