@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Game JavaScript | Code Ninja Collective</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="word-list.js" defer></script>
+    <script src="logic.js" defer></script>
+</head>
+<body>
+    <div class="game-modal">
+        <div class="content">
+            <img src="#" alt="gif">
+            <h4>Game Over!</h4>
+            <p>The correct word was: <b>rainbow</b></p>
+            <button class="play-again">Play Again</button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="hangman-box">
+            <img src="./images/hangman-0.svg" alt="Hangman">
+            <h1>Hangman</h1>
+        </div>
+        <div class="game-box">
+            <h4>Hint: <span class="hint-text"><b>—</b></span></h4>
+            <ul class="word-display"></ul>
+            <p class="guesses-text">Wrong guesses: <b>0 / 6</b></p>
+            <div class="keyboard"></div>
+        </div>
+    </div>
+
+</body>
+</html>
