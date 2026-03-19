@@ -44,10 +44,20 @@ const defaultGames = [
     title: "Reaction Tap",
     description: "Tap as quickly as you can when the signal appears.",
   },
-    {
+  {
     key: "breakout",
     title: "Breakout",
     description: "Break bricks and score points.",
+  },
+  {
+    key: "number_hunt",
+    title: "Number Hunt",
+    description: "Find the scattered numbers in order from 1 to 30.",
+  },
+  {
+    key: "fifteen_puzzle",
+    title: "Fifteen Puzzle",
+    description: "Slide the tiles and arrange the numbers from 1 to 15.",
   },
 ];
 
