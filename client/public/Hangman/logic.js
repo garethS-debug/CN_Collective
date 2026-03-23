@@ -126,9 +126,12 @@ testScoreButton.addEventListener("click", () => {
 
 const getResultsButton = document.getElementById("GetResults");
 getResultsButton.addEventListener("click", () => {
-fetch('http://127.0.0.1:5001/api/results/me', {
-  headers: { Authorization: `Bearer ${localStorage.getItem('mini-games-token')}` }
-}).then(r => r.json()).then(data => console.log(data));
+    const RESULTS_API = (window.__API && window.__API.RESULTS) || 'https://cn-collective.onrender.com/api/results';
+    fetch(`${RESULTS_API}/me`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('mini-games-token')}` },
+    })
+        .then((r) => r.json())
+        .then((data) => console.log(data));
 });
 
 playAgainBtn.addEventListener("click", getRandomWord);
