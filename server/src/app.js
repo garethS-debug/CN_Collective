@@ -26,6 +26,10 @@ app.use(
       const normOrigin = origin.replace(/\/$/, "");
       if (allowedOrigins.includes(normOrigin)) return callback(null, true);
 
+      console.warn(`CORS origin rejected: ${normOrigin} not in ${JSON.stringify(
+        allowedOrigins
+      )}`);
+
       return callback(new Error("CORS error: origin not allowed"));
     },
     credentials: true,
