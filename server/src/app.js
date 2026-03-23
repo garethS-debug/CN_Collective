@@ -5,8 +5,11 @@ const resultsRoutes = require("./routes/results.routes");
 
 const app = express();
 
+const rawClientUrl = process.env.CLIENT_URL || "";
+const clientUrl = rawClientUrl.replace(/\/$/, "");
+
 const allowedOrigins = [
-  process.env.CLIENT_URL,
+  clientUrl,
   "http://localhost:5173",
   "http://127.0.0.1:5173",
   "http://localhost:5174",
@@ -16,9 +19,12 @@ const allowedOrigins = [
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
+      // allow same-origin or non-browser requests
+      if (!origin) return callback(null, true);
+
+      // Normalize origin (strip trailing slash) before checking
+      const normOrigin = origin.replace(/\/$/, "");
+      if (allowedOrigins.includes(normOrigin)) return callback(null, true);
 
       return callback(new Error("CORS error: origin not allowed"));
     },
