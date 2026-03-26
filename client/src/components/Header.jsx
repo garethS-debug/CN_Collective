@@ -1,4 +1,5 @@
 import headerLogo from "../assets/banner/Logo.png";
+import { useEffect, useState } from "react";
 
 function Header({
   user,
@@ -10,6 +11,27 @@ function Header({
   onRegisterClick,
   onLogout,
 }) {
+  const [largeText, setLargeText] = useState(() => {
+    try {
+      return localStorage.getItem("largeText") === "1";
+    } catch (e) {
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      if (largeText) {
+        document.documentElement.classList.add("large-text");
+        localStorage.setItem("largeText", "1");
+      } else {
+        document.documentElement.classList.remove("large-text");
+        localStorage.setItem("largeText", "0");
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, [largeText]);
   return (
     <header className="flex flex-wrap items-center justify-between gap-4 rounded-[2rem] border border-white/70 bg-white/80 px-5 py-4 shadow-[0_10px_35px_rgba(93,64,55,0.12)] backdrop-blur">
       <button
@@ -58,7 +80,9 @@ function Header({
           >
             {user.name}
           </button>
+
           <div className="hidden items-center gap-3 rounded-full bg-stone-100 px-4 py-2 sm:flex">
+            <span className="text-sm font-medium text-stone-700">You are logged in as</span>
             {avatar ? (
               <img
                 src={avatar.src}
@@ -70,6 +94,15 @@ function Header({
               {user.name}
             </span>
           </div>
+
+          <button
+            type="button"
+            onClick={() => setLargeText((s) => !s)}
+            className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-800 hover:bg-stone-50"
+          >
+            Toggle text size
+          </button>
+
           <button
             type="button"
             onClick={onLogout}
