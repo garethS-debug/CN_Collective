@@ -1,3 +1,5 @@
+import headerLogo from "../assets/banner/Logo.png";
+
 function Header({
   user,
   avatar,
@@ -19,7 +21,11 @@ function Header({
           🎈
         </button> */}
         <div>
-          <img src="/logo.png" alt="Calm Play Club Logo" className="h-14 w-14 rounded-[1.25rem] object-cover" />
+          <img
+            src={headerLogo}
+            alt="Elder Quest Logo"
+            className="h-14 w-14 rounded-[1.25rem] object-cover"
+          />
         </div>
 
         <div>
@@ -27,7 +33,7 @@ function Header({
             Mini Games
           </p>
           <h1 className="text-2xl font-black text-stone-900 sm:text-3xl">
-            calm play club
+            Elder Quest
           </h1>
         </div>
       </div>

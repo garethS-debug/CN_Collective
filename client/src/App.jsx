@@ -7,6 +7,7 @@ import GameStage from "./components/GameStage.jsx";
 import ProfilePage from "./components/ProfilePage.jsx";
 import useAuth from "./hooks/useAuth.js";
 import useAvatarSelection from "./hooks/useAvatarSelection.js";
+import websiteBanner from "./assets/banner/Banner3.png";
 
 const RESULTS_API_URL =
   (typeof window !== "undefined" && window.__API && window.__API.RESULTS) ||
@@ -189,31 +190,41 @@ function App() {
         <main className={`${currentView === "game" ? "flex-1 py-2" : "flex-1 py-10"}`}>
           {currentView === "home" ? (
             <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
-              <div>
-                <section className="page-shell mb-10 overflow-hidden rounded-[2.25rem] border border-white/70 bg-white/70 px-6 py-8 shadow-[0_18px_60px_rgba(93,64,55,0.15)] backdrop-blur sm:px-10">
-                  <div className="max-w-4xl">
-                    <p className="mb-3 inline-flex rounded-full bg-amber-100 px-3 py-1 text-sm font-semibold text-amber-800">
-                      Quiet games with large controls and warm motion
-                    </p>
-                    <h2 className="text-4xl font-black leading-tight text-stone-900 sm:text-6xl">
-                      {user ? `Welcome ${user.name}` : "Welcome to calm play"}
-                    </h2>
-                    <p className="mt-4 max-w-2xl text-lg leading-8 text-stone-600">
-                      Pick a card, open the game in a full-page view and keep
-                      your scores in one place.
-                    </p>
-                    {isCheckingAuth ? (
-                      <p className="mt-5 inline-flex rounded-full bg-stone-200 px-4 py-2 text-sm font-semibold text-stone-700">
-                        Checking your session...
+              <section className="page-shell mb-10 overflow-hidden rounded-[2.25rem] border border-white/70 bg-white/70 shadow-[0_18px_60px_rgba(93,64,55,0.15)] backdrop-blur xl:col-span-2">
+                {user ? (
+                  <div className="px-6 py-8 sm:px-10 sm:py-10">
+                    <div className="max-w-4xl">
+                      <h2 className="text-4xl font-black leading-tight text-stone-900 sm:text-6xl">
+                        Welcome to Elder Quest!
+                      </h2>
+                      <p className="mt-4 max-w-2xl text-lg leading-8 text-stone-600">
+                        Pick a card, open the game in a full-page view and keep
+                        your scores in one place.
                       </p>
-                    ) : null}
-                    {statusMessage ? (
-                      <p className="mt-5 inline-flex rounded-full bg-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-800">
-                        {statusMessage}
-                      </p>
-                    ) : null}
+                      {isCheckingAuth ? (
+                        <p className="mt-5 inline-flex rounded-full bg-stone-200 px-4 py-2 text-sm font-semibold text-stone-700">
+                          Checking your session...
+                        </p>
+                      ) : null}
+                      {statusMessage ? (
+                        <p className="mt-5 inline-flex rounded-full bg-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-800">
+                          {statusMessage}
+                        </p>
+                      ) : null}
+                    </div>
                   </div>
-                </section>
+                ) : (
+                  <div className="relative aspect-[2.55/1] min-h-[240px] w-full sm:min-h-[300px] lg:min-h-[360px]">
+                    <img
+                      src={websiteBanner}
+                      alt="Calm Play banner"
+                      className="h-full w-full object-cover object-center"
+                    />
+                  </div>
+                )}
+              </section>
+
+              <div>
 
                 <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                   {games.map((game) => (
