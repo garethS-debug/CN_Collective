@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://127.0.0.1:5001/api/auth";
+  (typeof window !== "undefined" && window.__API && window.__API.AUTH) ||
+  import.meta.env.VITE_API_URL ||
+  "http://127.0.0.1:5001/api/auth";
 const TOKEN_STORAGE_KEY = "mini-games-token";
 
 function useAuth({ onAuthenticated, onLoggedOut }) {

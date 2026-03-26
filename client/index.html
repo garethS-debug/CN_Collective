@@ -8,6 +8,15 @@
   </head>
   <body>
     <div id="root"></div>
+    <script type="module">
+      // expose runtime API endpoints for public scripts and to allow
+      // runtime overrides without needing a rebuild. Vite will replace
+      // import.meta.env at build time inside this module.
+      window.__API = {
+        AUTH: import.meta.env.VITE_API_URL || 'http://127.0.0.1:5001/api/auth',
+        RESULTS: import.meta.env.VITE_RESULTS_API_URL || 'http://127.0.0.1:5001/api/results',
+      };
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

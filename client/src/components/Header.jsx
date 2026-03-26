@@ -11,13 +11,17 @@ function Header({
   return (
     <header className="flex flex-wrap items-center justify-between gap-4 rounded-[2rem] border border-white/70 bg-white/80 px-5 py-4 shadow-[0_10px_35px_rgba(93,64,55,0.12)] backdrop-blur">
       <div className="flex items-center gap-4">
-        <button
+        {/* <button
           type="button"
           onClick={onHomeClick}
           className="flex h-14 w-14 items-center justify-center rounded-[1.25rem] bg-gradient-to-br from-amber-300 via-orange-200 to-rose-200 text-4xl shadow-[0_10px_24px_rgba(217,119,6,0.22)] transition hover:-translate-y-0.5 hover:scale-[1.02]"
         >
           🎈
-        </button>
+        </button> */}
+        <div>
+          <img src="/logo.png" alt="Calm Play Club Logo" className="h-14 w-14 rounded-[1.25rem] object-cover" />
+        </div>
+
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-amber-700">
             Mini Games
