@@ -18,27 +18,27 @@ const games = [
   {
     key: "memory_cards",
     title: "Memory Cards",
-    subtitle: "Fruit pairs",
+    subtitle: "Practice your memory with fruits!",
     description:
-      "Flip the cards, match the fruit pairs and build your memory score.",
+      "Practice your memory by finding pairs of fruits!",
     icon: "🍓",
     accent: "bg-gradient-to-r from-amber-300 to-orange-300",
   },
   {
     key: "find_the_number",
     title: "Breakout",
-    subtitle: "Arcade game",
+    subtitle: "A classic arcade game to test your reflexes!",
     description:
-      "Break the bricks, keep the ball in play and build your score.",
+      "Move the paddle to bounce the ball towards the bricks!",
     icon: "🏓",
     accent: "bg-gradient-to-r from-sky-300 to-cyan-300",
   },
   {
     key: "sequence_repeat",
     title: "Hangman",
-    subtitle: "Word guessing",
+    subtitle: "Guess the word before it's too late!",
     description:
-      "Guess the hidden word by suggesting letters within a limited number of attempts.",
+      "Try to guess the word… be careful not to lose too many letters!",
     icon: "🧠",
     accent: "bg-gradient-to-r from-emerald-300 to-lime-300",
   },
@@ -54,9 +54,9 @@ const games = [
   {
     key: "fifteen_puzzle",
     title: "Fifteen Puzzle",
-    subtitle: "Slide the tiles",
+    subtitle: "Slide the tiles to arrange numbers in order!",
     description:
-      "Move the tiles into the empty space and arrange the numbers from 1 to 15.",
+      "Get from One to Fifteen by shuffling things around!",
     icon: "🔲",
     accent: "bg-gradient-to-r from-rose-300 to-pink-300",
   },
