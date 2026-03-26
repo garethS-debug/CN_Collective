@@ -116,6 +116,7 @@ for (let i = 97; i <= 122; i++) {
 }
 getRandomWord();
 
+/*
 const testScoreButton = document.getElementById("testScore");
 
 testScoreButton.addEventListener("click", () => {
@@ -133,5 +134,6 @@ getResultsButton.addEventListener("click", () => {
         .then((r) => r.json())
         .then((data) => console.log(data));
 });
+*/
 
 playAgainBtn.addEventListener("click", getRandomWord);

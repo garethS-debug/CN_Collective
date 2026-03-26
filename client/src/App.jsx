@@ -167,7 +167,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.65),_transparent_38%),linear-gradient(180deg,_#f7f2e7_0%,_#f2e5c9_42%,_#d8c4a0_100%)] text-stone-900">
+    <div className="min-h-screen bg-white text-stone-900">
       <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-5 py-6 sm:px-8">
         <Header
           user={user}

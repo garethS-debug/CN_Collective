@@ -12,7 +12,14 @@ function Header({
 }) {
   return (
     <header className="flex flex-wrap items-center justify-between gap-4 rounded-[2rem] border border-white/70 bg-white/80 px-5 py-4 shadow-[0_10px_35px_rgba(93,64,55,0.12)] backdrop-blur">
-      <div className="flex items-center gap-4">
+      <button
+        type="button"
+        onClick={onHomeClick}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") onHomeClick?.();
+        }}
+        className="flex items-center gap-4 bg-transparent border-0 p-0 cursor-pointer"
+      >
         {/* <button
           type="button"
           onClick={onHomeClick}
@@ -36,7 +43,7 @@ function Header({
             Elder Quest
           </h1>
         </div>
-      </div>
+      </button>
 
       {user ? (
         <div className="flex items-center gap-3">
