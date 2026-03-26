@@ -7,6 +7,7 @@ import GameStage from "./components/GameStage.jsx";
 import ProfilePage from "./components/ProfilePage.jsx";
 import useAuth from "./hooks/useAuth.js";
 import useAvatarSelection from "./hooks/useAvatarSelection.js";
+import websiteBanner from "./assets/banner/Banner3.png";
 
 const RESULTS_API_URL =
   (typeof window !== "undefined" && window.__API && window.__API.RESULTS) ||
@@ -17,27 +18,27 @@ const games = [
   {
     key: "memory_cards",
     title: "Memory Cards",
-    subtitle: "Fruit pairs",
+    subtitle: "Practice your memory with fruits!",
     description:
-      "Flip the cards, match the fruit pairs and build your memory score.",
+      "Practice your memory by finding pairs of fruits!",
     icon: "🍓",
     accent: "bg-gradient-to-r from-amber-300 to-orange-300",
   },
   {
     key: "find_the_number",
     title: "Breakout",
-    subtitle: "Arcade game",
+    subtitle: "A classic arcade game to test your reflexes!",
     description:
-      "Break the bricks, keep the ball in play and build your score.",
+      "Move the paddle to bounce the ball towards the bricks!",
     icon: "🏓",
     accent: "bg-gradient-to-r from-sky-300 to-cyan-300",
   },
   {
     key: "sequence_repeat",
     title: "Hangman",
-    subtitle: "Word guessing",
+    subtitle: "Guess the word before it's too late!",
     description:
-      "Guess the hidden word by suggesting letters within a limited number of attempts.",
+      "Try to guess the word… be careful not to lose too many letters!",
     icon: "🧠",
     accent: "bg-gradient-to-r from-emerald-300 to-lime-300",
   },
@@ -53,9 +54,9 @@ const games = [
   {
     key: "fifteen_puzzle",
     title: "Fifteen Puzzle",
-    subtitle: "Slide the tiles",
+    subtitle: "Slide the tiles to arrange numbers in order!",
     description:
-      "Move the tiles into the empty space and arrange the numbers from 1 to 15.",
+      "Get from One to Fifteen by shuffling things around!",
     icon: "🔲",
     accent: "bg-gradient-to-r from-rose-300 to-pink-300",
   },
@@ -166,7 +167,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.65),_transparent_38%),linear-gradient(180deg,_#f7f2e7_0%,_#f2e5c9_42%,_#d8c4a0_100%)] text-stone-900">
+    <div className="min-h-screen bg-white text-stone-900">
       <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-5 py-6 sm:px-8">
         <Header
           user={user}
@@ -189,31 +190,41 @@ function App() {
         <main className={`${currentView === "game" ? "flex-1 py-2" : "flex-1 py-10"}`}>
           {currentView === "home" ? (
             <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
-              <div>
-                <section className="page-shell mb-10 overflow-hidden rounded-[2.25rem] border border-white/70 bg-white/70 px-6 py-8 shadow-[0_18px_60px_rgba(93,64,55,0.15)] backdrop-blur sm:px-10">
-                  <div className="max-w-4xl">
-                    <p className="mb-3 inline-flex rounded-full bg-amber-100 px-3 py-1 text-sm font-semibold text-amber-800">
-                      Quiet games with large controls and warm motion
-                    </p>
-                    <h2 className="text-4xl font-black leading-tight text-stone-900 sm:text-6xl">
-                      {user ? `Welcome ${user.name}` : "Welcome to calm play"}
-                    </h2>
-                    <p className="mt-4 max-w-2xl text-lg leading-8 text-stone-600">
-                      Pick a card, open the game in a full-page view and keep
-                      your scores in one place.
-                    </p>
-                    {isCheckingAuth ? (
-                      <p className="mt-5 inline-flex rounded-full bg-stone-200 px-4 py-2 text-sm font-semibold text-stone-700">
-                        Checking your session...
+              <section className="page-shell mb-10 overflow-hidden rounded-[2.25rem] border border-white/70 bg-white/70 shadow-[0_18px_60px_rgba(93,64,55,0.15)] backdrop-blur xl:col-span-2">
+                {user ? (
+                  <div className="px-6 py-8 sm:px-10 sm:py-10">
+                    <div className="max-w-4xl">
+                      <h2 className="text-4xl font-black leading-tight text-stone-900 sm:text-6xl">
+                        Welcome to Elder Quest!
+                      </h2>
+                      <p className="mt-4 max-w-2xl text-lg leading-8 text-stone-600">
+                        Pick a card, open the game in a full-page view and keep
+                        your scores in one place.
                       </p>
-                    ) : null}
-                    {statusMessage ? (
-                      <p className="mt-5 inline-flex rounded-full bg-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-800">
-                        {statusMessage}
-                      </p>
-                    ) : null}
+                      {isCheckingAuth ? (
+                        <p className="mt-5 inline-flex rounded-full bg-stone-200 px-4 py-2 text-sm font-semibold text-stone-700">
+                          Checking your session...
+                        </p>
+                      ) : null}
+                      {statusMessage ? (
+                        <p className="mt-5 inline-flex rounded-full bg-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-800">
+                          {statusMessage}
+                        </p>
+                      ) : null}
+                    </div>
                   </div>
-                </section>
+                ) : (
+                  <div className="relative aspect-[2.55/1] min-h-[240px] w-full sm:min-h-[300px] lg:min-h-[360px]">
+                    <img
+                      src={websiteBanner}
+                      alt="Calm Play banner"
+                      className="h-full w-full object-cover object-center"
+                    />
+                  </div>
+                )}
+              </section>
+
+              <div>
 
                 <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                   {games.map((game) => (

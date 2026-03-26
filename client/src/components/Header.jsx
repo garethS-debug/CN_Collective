@@ -1,3 +1,6 @@
+import headerLogo from "../assets/banner/Logo.png";
+import { useEffect, useState } from "react";
+
 function Header({
   user,
   avatar,
@@ -8,9 +11,37 @@ function Header({
   onRegisterClick,
   onLogout,
 }) {
+  const [largeText, setLargeText] = useState(() => {
+    try {
+      return localStorage.getItem("largeText") === "1";
+    } catch (e) {
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      if (largeText) {
+        document.documentElement.classList.add("large-text");
+        localStorage.setItem("largeText", "1");
+      } else {
+        document.documentElement.classList.remove("large-text");
+        localStorage.setItem("largeText", "0");
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, [largeText]);
   return (
     <header className="flex flex-wrap items-center justify-between gap-4 rounded-[2rem] border border-white/70 bg-white/80 px-5 py-4 shadow-[0_10px_35px_rgba(93,64,55,0.12)] backdrop-blur">
-      <div className="flex items-center gap-4">
+      <button
+        type="button"
+        onClick={onHomeClick}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") onHomeClick?.();
+        }}
+        className="flex items-center gap-4 bg-transparent border-0 p-0 cursor-pointer"
+      >
         {/* <button
           type="button"
           onClick={onHomeClick}
@@ -19,7 +50,11 @@ function Header({
           🎈
         </button> */}
         <div>
-          <img src="/logo.png" alt="Calm Play Club Logo" className="h-14 w-14 rounded-[1.25rem] object-cover" />
+          <img
+            src={headerLogo}
+            alt="Elder Quest Logo"
+            className="h-14 w-14 rounded-[1.25rem] object-cover"
+          />
         </div>
 
         <div>
@@ -27,10 +62,10 @@ function Header({
             Mini Games
           </p>
           <h1 className="text-2xl font-black text-stone-900 sm:text-3xl">
-            calm play club
+            Elder Quest
           </h1>
         </div>
-      </div>
+      </button>
 
       {user ? (
         <div className="flex items-center gap-3">
@@ -45,7 +80,9 @@ function Header({
           >
             {user.name}
           </button>
+
           <div className="hidden items-center gap-3 rounded-full bg-stone-100 px-4 py-2 sm:flex">
+            <span className="text-sm font-medium text-stone-700">You are logged in as</span>
             {avatar ? (
               <img
                 src={avatar.src}
@@ -57,6 +94,15 @@ function Header({
               {user.name}
             </span>
           </div>
+
+          <button
+            type="button"
+            onClick={() => setLargeText((s) => !s)}
+            className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-800 hover:bg-stone-50"
+          >
+            Toggle text size
+          </button>
+
           <button
             type="button"
             onClick={onLogout}

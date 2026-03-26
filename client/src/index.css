@@ -6,7 +6,7 @@
   :root {
     font-family: "Trebuchet MS", "Segoe UI", sans-serif;
     color: #1c1917;
-    background: #f7f2e7;
+    background: #ffffff;
   }
 
   * {
@@ -20,6 +20,11 @@
   body {
     margin: 0;
     min-width: 320px;
+  }
+
+  /* larger text mode toggle applied to the root element */
+  html.large-text {
+    font-size: 125%;
   }
 
   button,

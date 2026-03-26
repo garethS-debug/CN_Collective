@@ -253,6 +253,7 @@ runButton.addEventListener("click", () => {
   runButton.disabled = true;
 });
 
+/*
 const testScoreButton = document.getElementById("testScore");
 testScoreButton.addEventListener("click", () => {
   const duration = startTime
@@ -270,5 +271,6 @@ getResultsButton.addEventListener("click", () => {
     .then((r) => r.json())
     .then((data) => console.log(data));
 });
+*/
 
 runButton.click();
