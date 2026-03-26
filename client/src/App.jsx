@@ -9,7 +9,9 @@ import useAuth from "./hooks/useAuth.js";
 import useAvatarSelection from "./hooks/useAvatarSelection.js";
 
 const RESULTS_API_URL =
-  import.meta.env.VITE_RESULTS_API_URL || "http://127.0.0.1:5001/api/results";
+  (typeof window !== "undefined" && window.__API && window.__API.RESULTS) ||
+  import.meta.env.VITE_RESULTS_API_URL ||
+  "http://127.0.0.1:5001/api/results";
 const TOKEN_STORAGE_KEY = "mini-games-token";
 const games = [
   {
